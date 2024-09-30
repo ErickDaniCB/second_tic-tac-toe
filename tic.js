@@ -16,13 +16,9 @@ function board () {
   }
 }
 
-let actBoard = board();
-
-console.table(actBoard.newBoard())
-
 // Cell factory
 function cell () {
-  let value = "O"
+  let value = "X"
 
   const getCellValue = () => value;
   
@@ -35,3 +31,44 @@ function cell () {
     setCellValue
   }
 }
+
+function gameFlow (playerOneName = "Player One", playerTwoName = "Player Two") {
+  const playerOne = {
+    name: playerOneName,
+    plays: "X"
+  }
+
+  const playerTwo = {
+    name: playerTwoName,
+    plays: "O"
+  }
+
+  let currentPlayer = playerOne;
+
+  let switchPlayer = (current) => {
+    if(current === playerOne){
+      currentPlayer = playerTwo;
+    } else {
+      currentPlayer = playerOne;
+    }
+  } 
+
+  let boardOBj = board();
+  let thisBoard = boardOBj.newBoard()
+  console.table(thisBoard)
+  
+  let placePlay = (row, column) => {
+    if(typeof thisBoard[row][column] === "object"){
+      thisBoard[row][column] = currentPlayer.plays;
+      switchPlayer(currentPlayer)
+      console.clear();
+      console.table(thisBoard);
+    }
+  }
+
+  return {
+    placePlay
+  }
+}
+
+let game1 = gameFlow();
