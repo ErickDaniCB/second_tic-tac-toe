@@ -22,5 +22,14 @@ body{
 #wrapper {
   height: 600px;
   width: 600px;
-  outline: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: row;
+  gap: 3px;
+  background-color: black;
+}
+
+.cell {
+  background-color: white;
 }
