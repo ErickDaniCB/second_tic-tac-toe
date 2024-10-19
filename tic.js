@@ -55,11 +55,11 @@ function winnerLogic(board) {
   };
 
   let checkWinner = (current) => {
-    let pattern = `${current}${current}${current}`;
+    let pattern = `${current.plays}${current.plays}${current.plays}`;
     rowsUpdate();
     columnsUpdate();
     if (rows.includes(`${pattern}`) || columns.includes(`${pattern}`)) {
-      console.log(`${current} wins!`);
+      console.log(`${current.name} wins!`);
     }
   };
 
