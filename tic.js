@@ -37,6 +37,8 @@ function cell() {
 function winnerLogic(board) {
   let rows = "";
   let columns = "";
+  let cross1 = "";
+  let cross2 = "";
 
   const rowsUpdate = () => {
     board.forEach((row) => {
@@ -54,11 +56,31 @@ function winnerLogic(board) {
     }
   };
 
+  const cross1Update = () => {
+    cross1 =
+      board[0][0].getCellValue() +
+      board[1][1].getCellValue() +
+      board[2][2].getCellValue();
+  };
+  const cross2Update = () => {
+    cross2 =
+      board[0][2].getCellValue() +
+      board[1][1].getCellValue() +
+      board[2][0].getCellValue();
+  };
+
   let checkWinner = (current) => {
     let pattern = `${current.plays}${current.plays}${current.plays}`;
     rowsUpdate();
     columnsUpdate();
-    if (rows.includes(`${pattern}`) || columns.includes(`${pattern}`)) {
+    cross1Update();
+    cross2Update();
+    if (
+      rows.includes(`${pattern}`) ||
+      columns.includes(`${pattern}`) ||
+      cross1.includes(`${pattern}`) ||
+      cross2.includes(`${pattern}`)
+    ) {
       console.log(`${current.name} wins!`);
     }
   };
@@ -100,7 +122,7 @@ function gameFlow(playerOneName = "Player One", playerTwoName = "Player Two") {
 
   let placePlay = (row, column) => {
     const thisValue = thisBoard[row][column].getCellValue();
-    if ( thisValue === "none") {
+    if (thisValue === "none") {
       thisBoard[row][column].setCellValue(currentPlayer.plays);
       updateLogs();
       winnerObj.checkWinner(currentPlayer);
