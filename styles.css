@@ -1,9 +1,9 @@
-*{
+* {
   margin: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -23,13 +23,19 @@ body{
   height: 600px;
   width: 600px;
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(3, auto);
-  grid-auto-flow: row;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
   gap: 3px;
   background-color: black;
 }
 
 .cell {
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mark {
+  font-size: 5rem;
 }
