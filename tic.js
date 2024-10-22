@@ -82,7 +82,9 @@ function winnerLogic(board) {
       cross2.includes(`${pattern}`)
     ) {
       console.log(`${current.name} wins!`);
+      return true;
     }
+    return false
   };
 
   return {
@@ -120,16 +122,20 @@ function gameFlow(playerOneName = "Player One", playerTwoName = "Player Two") {
     }
   };
 
-  let placePlay = (row, column) => {
+  let getCurrentPlayer = () => {
+    return currentPlayer;
+  };
+
+  //VALID/PLACE PLAY
+
+  let checkEmptyCell = (row, column) => {
     const thisValue = thisBoard[row][column].getCellValue();
-    if (thisValue === "none") {
+    return thisValue === "none" ? true :false; 
+  }
+
+  let placePlay = (row, column) => {
       thisBoard[row][column].setCellValue(currentPlayer.plays);
       updateLogs();
-      winnerObj.checkWinner(currentPlayer);
-      switchPlayer(currentPlayer);
-    } else {
-      console.log("Cell already taken");
-    }
   };
 
   //Logs
@@ -148,8 +154,31 @@ function gameFlow(playerOneName = "Player One", playerTwoName = "Player Two") {
   updateLogs();
 
   return {
+    winnerObj,
+    switchPlayer,
+    getCurrentPlayer,
+    checkEmptyCell,
     placePlay,
   };
 }
 
-let game1 = gameFlow();
+let game = gameFlow();
+
+//DOM
+
+const wrapper = document.querySelector("#wrapper");
+const marks = document.querySelectorAll("#mark");
+
+wrapper.addEventListener("click", (e) => {
+  let id = e.target.id;
+  if(game.checkEmptyCell(id[0], id[1])){
+    const curr = game.getCurrentPlayer();
+    e.target.firstChild.textContent = curr.plays;
+    game.placePlay(id[0], id[1]);
+    if(game.winnerObj.checkWinner(curr)){
+      console.log(curr.name + " wins!");
+    } else {
+      game.switchPlayer(curr);
+    }
+  }
+});
